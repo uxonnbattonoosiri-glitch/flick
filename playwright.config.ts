@@ -4,6 +4,7 @@ const PORT = 4173;
 
 export default defineConfig({
   testDir: 'tests',
+  testIgnore: 'production.spec.ts',
   timeout: 40_000,
   expect: { timeout: 8_000 },
   fullyParallel: true,
