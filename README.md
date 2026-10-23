@@ -4,6 +4,13 @@
 
 - 公開先：https://flick.formesartart.workers.dev
 - 技術の選び方と理由：[docs/TECH_CHOICES.md](docs/TECH_CHOICES.md)
+- プライバシーポリシー：https://flick.formesartart.workers.dev/privacy
+
+<p>
+  <img src="docs/images/list.png" width="260" alt="一覧">
+  <img src="docs/images/edit.png" width="260" alt="編集">
+</p>
+<p><img src="docs/images/flick.png" width="520" alt="右へ払うと、下から次の状態が現れる"></p>
 
 ## 使い方
 
@@ -15,6 +22,8 @@
 | カードを左へ払う | 完了 → 進行中 → 未着手 |
 | 左の丸 | 次の状態へ |
 | カードを押す | 書き換え・状態の選択・削除 |
+| 通知の「元に戻す」 | 直前の操作を取り消す |
+| 右上の丸 | ログアウト・アカウントの削除 |
 
 ## 構成
 
@@ -46,7 +55,13 @@ npm run dev
 npm test
 ```
 
-ビルドしたものを `wrangler dev` で動かし、iPhone（WebKit）・Android（Chromium）・パソコン（Chrome）の 3 種類のブラウザで操作して確かめる。
+ビルドしたものを `wrangler dev` で動かし、iPhone（WebKit）・Android（Chromium）・パソコン（Chrome）の 3 種類のブラウザで操作して確かめる（33 項目 × 3 種類）。
+
+```bash
+npm run test:prod
+```
+
+公開中のサイトを、同じ 3 種類のブラウザで確かめる（ログインなしで確かめられる 6 項目）。
 
 ## 公開
 
@@ -55,9 +70,11 @@ npm run db:migrate:remote
 npm run deploy
 ```
 
-## Google ログインの設定
+## Google ログインの設定（済み）
 
-1. Google Cloud で OAuth クライアント（種類：ウェブ アプリケーション）を作る。
-   - 承認済みの JavaScript 生成元：`https://flick.formesartart.workers.dev`
-   - 承認済みのリダイレクト URI：`https://flick.formesartart.workers.dev/api/auth/google`
-2. クライアント ID を `wrangler.jsonc` の `GOOGLE_CLIENT_ID` に入れて公開し直す（クライアント ID は公開してよい値。シークレットは使わない）。
+Google Cloud のプロジェクト「Flick」に、OAuth クライアント（ウェブ アプリケーション）を作ってある。公開ステータスは「本番環境」。
+
+- 承認済みの JavaScript 生成元：`https://flick.formesartart.workers.dev`
+- 承認済みのリダイレクト URI：`https://flick.formesartart.workers.dev/api/auth/google`
+- クライアント ID は `wrangler.jsonc` の `GOOGLE_CLIENT_ID`（公開してよい値）。クライアント シークレットは使わない。
+- 手元では `.dev.vars` で `GOOGLE_CLIENT_ID` を空にして、Google のボタンを読み込まない（テスト用のログインを使う）。
