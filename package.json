@@ -1,0 +1,38 @@
+{
+  "name": "flick",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply flick-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply flick-db --remote",
+    "types": "wrangler types",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "hono": "^4.13.13",
+    "jose": "^6.2.13",
+    "motion": "^14.6.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.64.0",
+    "@playwright/test": "^1.64.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "wrangler": "^4.152.0"
+  },
+  "allowScripts": {
+    "workerd@1.20261012.1": true,
+    "workerd@1.20261019.1": true,
+    "esbuild@0.28.2": true
+  }
+}
