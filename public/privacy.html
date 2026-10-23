@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f5f9" />
+    <title>プライバシーポリシー – Flick</title>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        --ink: #0b1020;
+        --ink-2: rgba(11, 16, 32, 0.6);
+        --bg: #f4f5f9;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: radial-gradient(120% 80% at 50% 0%, #fff 0%, var(--bg) 70%);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', system-ui, sans-serif;
+        line-height: 1.8;
+        -webkit-font-smoothing: antialiased;
+      }
+      main {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: calc(env(safe-area-inset-top) + 28px) 16px 64px;
+      }
+      article {
+        padding: 28px 22px;
+        border-radius: 24px;
+        background: linear-gradient(165deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.65));
+        box-shadow:
+          inset 0 1px 0 #fff,
+          0 14px 34px -16px rgba(20, 30, 60, 0.24);
+      }
+      a.back {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: var(--ink-2);
+        text-decoration: none;
+        font-size: 14px;
+      }
+      h1 {
+        margin: 0 0 6px;
+        font-size: 22px;
+      }
+      h2 {
+        margin: 28px 0 6px;
+        font-size: 16px;
+      }
+      p,
+      li {
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+      ul {
+        padding-left: 1.2em;
+      }
+      .date {
+        color: var(--ink-2);
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="/">← Flick に戻る</a>
+      <article>
+        <h1>プライバシーポリシー</h1>
+        <p class="date">2026年10月23日</p>
+
+        <p>Flick（以下「本アプリ」）が受け取る情報と、その扱い方を説明します。</p>
+
+        <h2>1. 受け取る情報</h2>
+        <ul>
+          <li>Google でログインしたときに Google から受け取る、メールアドレス・名前・プロフィール画像の URL・Google のアカウント ID</li>
+          <li>あなたが書いたタスクの内容と状態、作成と更新の時刻</li>
+          <li>AI で分ける機能を使った回数（1 日ごと）</li>
+        </ul>
+
+        <h2>2. 使い道</h2>
+        <p>ログインと、あなたのタスクを保存・同期して表示するためだけに使います。広告や販売、そのほかの目的には使いません。</p>
+
+        <h2>3. 保存する場所</h2>
+        <p>Cloudflare のデータベース（D1）に保存します。ログインの状態は、ブラウザのクッキー（JavaScript から読めない形式）と、データベースに置いたその値のハッシュで管理します。すぐに開けるよう、タスクの写しをあなたの端末（ブラウザの保存領域）にも置きます。</p>
+
+        <h2>4. AI で分ける機能</h2>
+        <p>✦ を押したときだけ、入力欄の文章を Cloudflare Workers AI に送り、タスクに分けます。本アプリは、AI に送った文章を保存しません。分けた結果は、あなたが「追加」を押したものだけがタスクとして保存されます。</p>
+
+        <h2>5. ほかの人や会社への提供</h2>
+        <p>法令にもとづく場合を除き、あなたの情報をほかの人や会社に渡すことはありません。</p>
+
+        <h2>6. クッキー</h2>
+        <p>ログインの状態を保つためのクッキーだけを使います。アクセス解析や広告のクッキーは使いません。Google のログインボタンは Google が提供しており、Google のプライバシーポリシーに従います。</p>
+
+        <h2>7. 消し方</h2>
+        <p>右上のアカウントのメニューにある「アカウントを削除」で、タスク・ログインの記録・AI の利用回数を含むすべての情報を、すぐに消せます。ログアウトすると、端末に置いた写しも消えます。</p>
+
+        <h2>8. 問い合わせ</h2>
+        <p><a href="https://github.com/uxonnbattonoosiri-glitch/flick/issues">GitHub の Issues</a> から受け付けます。</p>
+
+        <h2>9. 変更</h2>
+        <p>内容を変えるときは、このページを更新し、上の日付を改めます。</p>
+      </article>
+    </main>
+  </body>
+</html>

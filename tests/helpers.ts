@@ -32,6 +32,15 @@ export async function add(page: Page, title: string) {
 export async function flick(page: Page, target: Locator, dir: 1 | -1, ratio = 0.62) {
   const card = target.locator('[data-testid=task]');
   await card.scrollIntoViewIfNeeded();
+  // 現れる動きや並び替えの動きが止まってから触る（人が見てから払うのと同じ）
+  await expect
+    .poll(async () => {
+      const a = await card.boundingBox();
+      await page.waitForTimeout(50);
+      const b = await card.boundingBox();
+      return !!a && !!b && a.x === b.x && a.y === b.y && a.width === b.width;
+    })
+    .toBe(true);
   const box = (await card.boundingBox())!;
   const y = box.y + box.height / 2;
   const x = box.x + box.width / 2;

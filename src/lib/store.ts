@@ -213,15 +213,25 @@ export async function checkAuth() {
   }
 }
 
+function forget() {
+  pending = {};
+  owner = null;
+  set({ tasks: [], user: null, auth: 'out', ready: true });
+}
+
 export async function logout() {
   try {
     await api('/api/auth/logout', { method: 'POST' });
   } catch {
     /* 通信できなくても手元は消す */
   }
-  pending = {};
-  owner = null;
-  set({ tasks: [], user: null, auth: 'out', ready: true });
+  forget();
+}
+
+/** サーバーのデータを全部消してから、手元も消す（失敗したら手元は残す） */
+export async function deleteAccount() {
+  await api('/api/me', { method: 'DELETE' });
+  forget();
 }
 
 if (typeof window !== 'undefined') {

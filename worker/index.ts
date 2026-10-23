@@ -183,6 +183,19 @@ app.post('/auth/logout', async (c) => {
 // ログインしていなくてもエラーにはしない（ブラウザのコンソールを汚さないため）
 app.get('/me', async (c) => c.json({ user: await findUser(c) }));
 
+// アカウントを削除する。タスク・ログイン・AI の回数・利用者の記録をすべて消す
+app.delete('/me', requireUser, async (c) => {
+  const id = c.get('user').id;
+  await c.env.DB.batch([
+    c.env.DB.prepare('DELETE FROM tasks WHERE user_id = ?').bind(id),
+    c.env.DB.prepare('DELETE FROM ai_usage WHERE user_id = ?').bind(id),
+    c.env.DB.prepare('DELETE FROM sessions WHERE user_id = ?').bind(id),
+    c.env.DB.prepare('DELETE FROM users WHERE id = ?').bind(id),
+  ]);
+  deleteCookie(c, SESSION_COOKIE, { path: '/' });
+  return c.json({ ok: true });
+});
+
 type Row = {
   id: string;
   title: string;

@@ -34,6 +34,12 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
   if (req.method !== 'GET' || url.origin !== location.origin || url.pathname.startsWith('/api/')) return;
 
+  // アプリ以外のページ（プライバシーポリシーなど）は、まず通信で取りにいく
+  if (req.mode === 'navigate' && url.pathname !== '/') {
+    event.respondWith(fetch(req).catch(() => caches.match('/')));
+    return;
+  }
+
   if (req.mode === 'navigate') {
     event.respondWith(
       caches.open(CACHE).then(async (cache) => {

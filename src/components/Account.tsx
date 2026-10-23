@@ -1,13 +1,15 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'motion/react';
-import { logout, useStore } from '../lib/store';
+import { deleteAccount, logout, useStore } from '../lib/store';
 import { PersonIcon } from './Icons';
 
 /** 右上の丸。静的な HTML の枠（#account-slot）に差し込む */
 export function Account({ onLoginWanted }: { onLoginWanted(): void }) {
   const [slot, setSlot] = useState<HTMLElement | null>(null);
   const [open, setOpen] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const auth = useStore((s) => s.auth);
   const user = useStore((s) => s.user);
 
@@ -20,7 +22,10 @@ export function Account({ onLoginWanted }: { onLoginWanted(): void }) {
   }, []);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setConfirming(false);
+      return;
+    }
     const close = (e: PointerEvent) => {
       if (!(e.target as Element).closest('.account')) setOpen(false);
     };
@@ -88,6 +93,41 @@ export function Account({ onLoginWanted }: { onLoginWanted(): void }) {
             >
               ログアウト
             </motion.button>
+            {/* 削除は 2 回押して確定する。1 回目でボタンが赤く広がり、確認の文に変わる */}
+            <motion.button
+              layout
+              type="button"
+              className={`menu-item menu-danger${confirming ? ' is-confirming' : ''}`}
+              whileTap={{ scale: 0.96 }}
+              disabled={deleting}
+              onClick={async () => {
+                if (!confirming) {
+                  setConfirming(true);
+                  return;
+                }
+                setDeleting(true);
+                try {
+                  await deleteAccount();
+                  setOpen(false);
+                } catch {
+                  setDeleting(false);
+                }
+              }}
+            >
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.span
+                  key={confirming ? 'sure' : 'ask'}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                >
+                  {confirming ? 'すべて消します。よろしいですか' : 'アカウントを削除'}
+                </motion.span>
+              </AnimatePresence>
+            </motion.button>
+            <a className="menu-link" href="/privacy">
+              プライバシーポリシー
+            </a>
           </motion.div>
         )}
       </AnimatePresence>

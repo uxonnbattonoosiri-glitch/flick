@@ -17,7 +17,7 @@
   ],
   "ai": { "binding": "AI", "remote": true },
   "vars": {
-    "GOOGLE_CLIENT_ID": "",
+    "GOOGLE_CLIENT_ID": "1040417132448-96bsje84767nvo0jqelak4p1h1g0d3ej.apps.googleusercontent.com",
     "AI_MODEL": "@cf/google/gemma-4-26b-a4b-it",
     "AI_DAILY_LIMIT": "40"
   },

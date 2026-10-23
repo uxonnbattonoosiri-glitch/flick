@@ -19,10 +19,17 @@ test('メモして、払って、取り消せる（ログイン前）', async ({
   await expect(r).toHaveAttribute('data-status', 'todo');
 });
 
-test('Google のログインボタンの場所がある', async ({ page }) => {
+test('本物の Google ログインボタンが出る', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByTestId('login-card')).toBeVisible();
-  await expect(page.getByTestId('login-card').getByTestId('google-button')).toBeAttached();
+  // Google が用意したボタン（iframe）が、ガラスの台の上に描かれる
+  await expect(page.getByTestId('login-card').locator('iframe[src*="accounts.google.com/gsi"]')).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByTestId('login-card').locator('.gbtn-wrap')).toHaveAttribute('data-state', 'ready');
+});
+
+test('プライバシーポリシーが開ける', async ({ page }) => {
+  await page.goto('/privacy');
+  await expect(page.getByRole('heading', { name: 'プライバシーポリシー' })).toBeVisible();
 });
 
 test('横にはみ出さない', async ({ page }) => {

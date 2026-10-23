@@ -301,6 +301,31 @@ test.describe('ログイン', () => {
     await expect(page.getByTestId('task')).toHaveCount(0);
   });
 
+  test('アカウントを削除すると、サーバーからも端末からも消える（2 回押して確定）', async ({ page }) => {
+    await login(page);
+    await open(page);
+    await add(page, '消すアカウントのタスク');
+    await expect.poll(async () => (await serverTasks(page)).length).toBe(1);
+    await page.getByTestId('account').click();
+    const del = page.getByRole('button', { name: 'アカウントを削除' });
+    await del.click();
+    // 1 回目では消えず、確認に変わる
+    await expect(page.getByRole('button', { name: 'すべて消します。よろしいですか' })).toBeVisible();
+    await page.getByRole('button', { name: 'すべて消します。よろしいですか' }).click();
+    await expect(page.getByTestId('login-card')).toBeVisible();
+    await expect(page.getByTestId('task')).toHaveCount(0);
+    expect((await page.request.get('/api/tasks')).status()).toBe(401);
+    expect(await (await page.request.get('/api/me')).json()).toEqual({ user: null });
+  });
+
+  test('プライバシーポリシーを開ける', async ({ page }) => {
+    await open(page);
+    await page.getByTestId('login-card').getByRole('link', { name: 'プライバシーポリシー' }).click();
+    await expect(page.getByRole('heading', { name: 'プライバシーポリシー' })).toBeVisible();
+    await page.getByRole('link', { name: '← Flick に戻る' }).click();
+    await expect(page.locator('main')).toBeVisible();
+  });
+
   test('Google のボタンの場所がある（手元ではクライアント ID がないので代わりのボタン）', async ({ page }) => {
     await open(page);
     await expect(page.getByTestId('login-card').getByRole('button', { name: 'Google でログイン' })).toBeVisible();

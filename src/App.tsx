@@ -214,6 +214,9 @@ export function App() {
                   transition={{ type: 'spring', stiffness: 420, damping: 36 }}
                 >
                   <GoogleButton />
+                  <a className="privacy-link" href="/privacy">
+                    プライバシーポリシー
+                  </a>
                 </motion.div>
               )}
             </AnimatePresence>

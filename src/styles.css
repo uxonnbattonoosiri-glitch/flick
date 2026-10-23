@@ -426,12 +426,51 @@ body::before {
 
 .menu-item {
   position: relative;
-  height: 44px;
+  min-height: 44px;
+  padding: 0 12px;
   border: 0;
   border-radius: 14px;
+  background: rgba(11, 16, 32, 0.05);
+  color: var(--ink);
+  font-weight: 600;
+  overflow: hidden;
+}
+
+.menu-danger {
   background: rgba(255, 59, 78, 0.08);
   color: var(--danger);
-  font-weight: 600;
+  transition:
+    background 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.menu-danger.is-confirming {
+  background: var(--danger);
+  color: #fff;
+}
+
+.menu-danger:disabled {
+  opacity: 0.6;
+}
+
+.menu-link {
+  position: relative;
+  justify-self: center;
+  padding: 2px 6px;
+  color: var(--ink-3);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.privacy-link {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin: -6px 0 14px;
+  color: var(--ink-3);
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
 }
 
 /* ===== 本文 ===== */
